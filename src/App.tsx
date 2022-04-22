@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import "./App.css"
-import Diary from "./pages/Diary"
-import Edit from "./pages/Edit"
 import Home from "./pages/Home"
 import New from "./pages/New"
+import Edit from "./pages/Edit"
+import Diary from "./pages/Diary"
 
 // COMPONENTS
-import MyButton from "./components/MyButton"
 import MyHeader from "./components/MyHeader"
+import MyButton from "./components/MyButton"
 
 function App() {
   return (
