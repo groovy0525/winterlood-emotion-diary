@@ -30,7 +30,7 @@ type EditType = {
 
 type ActionType = InitType | CreateType | RemoveType | EditType
 
-const reducer = (state: any, action: ActionType) => {
+const reducer = (state: DiaryState[], action: ActionType): DiaryState[] => {
   let newState: DiaryState[] = []
 
   switch (action.type) {
@@ -150,7 +150,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/new" element={<New />} />
-              <Route path="/edit" element={<Edit />} />
+              <Route path="/edit/:id" element={<Edit />} />
               <Route path="/diary/:id" element={<Diary />} />
             </Routes>
           </div>
