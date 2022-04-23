@@ -1,7 +1,7 @@
-import { useContext, useRef, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { DiaryDispatchContext } from "../App"
-import { Emotion } from "../types"
+import { DiaryState, Emotion } from "../types"
 import { getStringDate } from "../util/date"
 import EmotionItem from "./EmotionItem"
 import MyButton from "./MyButton"
@@ -35,9 +35,14 @@ const emotionList: Emotion[] = [
   },
 ]
 
-function DiaryEditor() {
+interface DiaryEditorProps {
+  isEdit?: boolean
+  originData?: DiaryState
+}
+
+function DiaryEditor({ isEdit, originData }: DiaryEditorProps) {
   const navigate = useNavigate()
-  const { onCreate } = useContext(DiaryDispatchContext)!
+  const { onCreate, onEdit } = useContext(DiaryDispatchContext)!
 
   const [date, setDate] = useState<string>(() => getStringDate(new Date()))
   const [emotion, setEmotion] = useState<number>(3)
@@ -52,18 +57,41 @@ function DiaryEditor() {
       return
     }
 
-    onCreate({
-      date: Date.now(),
-      content,
-      emotion,
-    })
-    navigate("/", { replace: true })
+    if (
+      window.confirm(
+        isEdit ? "일기를 수정하시겠습니까?" : "새로운 일기를 작성하시겠습니까?"
+      )
+    ) {
+      if (!isEdit) {
+        onCreate({
+          date: Date.now(),
+          content,
+          emotion,
+        })
+      } else {
+        onEdit({
+          id: originData!.id,
+          date: Date.now(),
+          content: content,
+          emotion: emotion,
+        })
+      }
+      navigate("/", { replace: true })
+    }
   }
+
+  useEffect(() => {
+    if (isEdit && originData) {
+      setDate(getStringDate(new Date(originData.date)))
+      setEmotion(originData.emotion)
+      setContent(originData.content)
+    }
+  }, [isEdit, originData])
 
   return (
     <div className="DiaryEditor">
       <MyHeader
-        headText="새 일기쓰기"
+        headText={isEdit ? "일기 수정하기" : "새 일기쓰기"}
         leftChild={<MyButton text="< 뒤로가기" onClick={() => navigate(-1)} />}
       />
       <div>
