@@ -7,10 +7,8 @@ export interface DiaryState {
 
 export interface ReqDiary extends Omit<DiaryState, "id"> {}
 
-export interface Comment {
-  id: number
-  postId: number
-  name: string
-  email: string
-  body: string
+export interface Emotion {
+  emotion_id: number
+  emotion_img: string
+  emotion_descrpit: string
 }
