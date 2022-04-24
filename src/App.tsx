@@ -1,4 +1,4 @@
-import { createContext, useReducer, useRef } from "react"
+import { createContext, useEffect, useReducer, useRef } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import "./App.css"
 
@@ -54,6 +54,7 @@ const reducer = (state: DiaryState[], action: ActionType): DiaryState[] => {
       return state
   }
 
+  localStorage.setItem("diary", JSON.stringify(newState))
   return newState
 }
 
@@ -65,42 +66,9 @@ export const DiaryDispatchContext = createContext<{
   onEdit: ({ id, date, content, emotion }: DiaryState) => void
 } | null>(null)
 
-const dummyData: DiaryState[] = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의일기 1번",
-    date: 1650665093035,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의일기 2번",
-    date: 1650665093036,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의일기 3번",
-    date: 1650665093037,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의일기 4번",
-    date: 1650665093038,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의일기 5번",
-    date: 1650665093039,
-  },
-]
-
 function App() {
-  const [data, dispatch] = useReducer(reducer, dummyData)
-  const dataId = useRef<number>(6)
+  const [data, dispatch] = useReducer(reducer, [])
+  const dataId = useRef<number>(0)
 
   // CREATE
   const onCreate = ({ date, content, emotion }: ReqDiary) => {
@@ -135,6 +103,23 @@ function App() {
       },
     })
   }
+
+  useEffect(() => {
+    const localData = localStorage.getItem("diary")
+
+    if (localData) {
+      const diaryList: DiaryState[] = JSON.parse(localData)
+      if (Array.isArray(diaryList) && diaryList.length > 0) {
+        diaryList.sort((a: DiaryState, b: DiaryState) => b.id - a.id)
+        dataId.current = diaryList[0].id + 1
+
+        dispatch({
+          type: "INIT",
+          data: diaryList,
+        })
+      }
+    }
+  }, [])
 
   return (
     <DiaryStateContext.Provider value={data}>
