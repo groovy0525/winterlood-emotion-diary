@@ -37,7 +37,7 @@ function DiaryEditor({ isEdit, originData }: DiaryEditorProps) {
     ) {
       if (!isEdit) {
         onCreate({
-          date: Date.now(),
+          date: new Date(date).getTime(),
           content,
           emotion,
         })
