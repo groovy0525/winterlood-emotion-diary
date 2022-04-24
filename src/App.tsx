@@ -100,7 +100,7 @@ const dummyData: DiaryState[] = [
 
 function App() {
   const [data, dispatch] = useReducer(reducer, dummyData)
-  const dataId = useRef<number>(0)
+  const dataId = useRef<number>(6)
 
   // CREATE
   const onCreate = ({ date, content, emotion }: ReqDiary) => {
