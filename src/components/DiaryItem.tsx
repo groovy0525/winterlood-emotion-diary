@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { useNavigate } from "react-router-dom"
 import { DiaryState } from "../types"
 import MyButton from "./MyButton"
@@ -39,4 +40,4 @@ function DiaryItem({ diary: { id, emotion, content, date } }: DiaryItemProps) {
   )
 }
 
-export default DiaryItem
+export default memo(DiaryItem)

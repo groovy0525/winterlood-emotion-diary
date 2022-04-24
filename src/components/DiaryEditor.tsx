@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { DiaryDispatchContext } from "../App"
 import { DiaryState } from "../types"
@@ -22,7 +22,10 @@ function DiaryEditor({ isEdit, originData }: DiaryEditorProps) {
   const [content, setContent] = useState<string>("")
   const contentRef = useRef<HTMLTextAreaElement>(null)
 
-  const handleClickEmote = (emotion_id: number) => setEmotion(emotion_id)
+  const handleClickEmote = useCallback(
+    (emotion_id: number) => setEmotion(emotion_id),
+    []
+  )
 
   const handleSubmit = () => {
     if (content.length < 1) {

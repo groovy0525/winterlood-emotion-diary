@@ -32,10 +32,8 @@ function Diary() {
   }
 
   const curEmotionData = emotionList.find(
-    (emotion) => emotion.emotion_id === data.id
+    (emotion) => emotion.emotion_id === data.emotion
   )
-
-  console.log(curEmotionData)
 
   return (
     <div className="DiaryPage">

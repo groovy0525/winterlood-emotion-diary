@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { Emotion } from "../types"
 
 interface EmotionItemProps {
@@ -25,4 +26,4 @@ function EmotionItem({
   )
 }
 
-export default EmotionItem
+export default memo(EmotionItem)

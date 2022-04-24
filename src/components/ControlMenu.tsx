@@ -1,3 +1,5 @@
+import { memo } from "react"
+
 interface ControlMenuProps {
   value: string
   onChange: React.Dispatch<React.SetStateAction<string>>
@@ -20,4 +22,4 @@ function ControlMenu({ value, onChange, sortOptionList }: ControlMenuProps) {
   )
 }
 
-export default ControlMenu
+export default memo(ControlMenu)
