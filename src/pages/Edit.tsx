@@ -25,6 +25,11 @@ function Edit() {
     }
   }, [diaryList, id, navigate])
 
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0]
+    titleElement.innerHTML = `감정 일기장 - ${id}번 일기 수정`
+  }, [id])
+
   return (
     <div>{originData && <DiaryEditor isEdit originData={originData} />}</div>
   )
