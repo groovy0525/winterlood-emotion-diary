@@ -37,6 +37,11 @@ function Home() {
     }
   }, [curDate, diaryList])
 
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0]
+    titleElement.innerHTML = `감정 일기장`
+  }, [])
+
   const increaseMonth = () => {
     setCurDate(
       new Date(curDate.getFullYear(), curDate.getMonth() + 1, curDate.getDate())

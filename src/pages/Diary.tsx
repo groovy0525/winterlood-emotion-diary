@@ -27,6 +27,11 @@ function Diary() {
     }
   }, [diaryList, id, navigate])
 
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0]
+    titleElement.innerHTML = `감정 일기장 - ${id}번 일기`
+  }, [id])
+
   if (!data) {
     return <div className="DiaryPage">로딩중입니다...</div>
   }
